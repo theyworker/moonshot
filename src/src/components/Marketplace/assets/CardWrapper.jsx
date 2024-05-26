@@ -1,7 +1,7 @@
 import React from 'react';
 import { TicketCard } from '../TicketCard';
 
-export const CardWrapper = ({children}) => {
+export const CardWrapper = ({tickets}) => {
     const locations = ['New York', 'Los Angeles', 'Miami', 'Chicago', 'San Francisco', 'Seattle', 'Boston', 'Las Vegas', 'Toronto', 'Vancouver', 'Montreal', 'Calgary', 'Ottawa', 'Quebec City', 'Edmonton', 'Winnipeg', 'Halifax', 'Victoria'];
     const getRandomDate = () => {
         const date = new Date();
@@ -20,15 +20,31 @@ export const CardWrapper = ({children}) => {
         } while (to === from);
         return `${from} to ${to}`;
     }
+    let cards = tickets && tickets.map((ticket) => {
+        return {
+            route: `${ticket.departureCity} to ${ticket.destinationCity}`,
+            date: ticket.departureDate,
+            price: ticket.price
+        }
+    });
     
     return (
         <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'start', gap: '20px'}}>
-            {Array.from({ length: 12 }).map((_, index) => (
+            {/* {Array.from({ length: 12 }).map((_, index) => (
                 <TicketCard 
                 key={index}
                 route={getRandomRoute()} 
                 date={getRandomDate()} 
                 price={getRandomPrice()}
+                />
+            ))} */}
+
+            {cards && cards.map((card, index) => (
+                <TicketCard 
+                key={index}
+                route={card.route} 
+                date={card.date} 
+                price={card.price}
                 />
             ))}
         </div>

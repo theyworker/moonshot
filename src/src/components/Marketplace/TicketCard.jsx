@@ -53,7 +53,8 @@ export const TicketCard = ({route, date, price}) => {
             color="text.secondary"
             sx={{ textAlign: "end", width: "40%" }}
           >
-            {getDateString(date)}
+            {/* {getDateString(date)} */}
+            {date}
           </Typography>
         </CardContent>
       </CardActionArea>

@@ -8,14 +8,29 @@ actor class TicketMaster() {
   departureDate: Text;
   departureCity: Text;
   destinationCity: Text;
-  status : Nat;
-  owner: Text
+  status : Text;
+  price: Text
 };
 
   let tickerBuffer = Buffer.Buffer<Ticket>(100);
 
-  public func createTicket(name: Text, departureDate: Text, departureCity: Text, destinationCity: Text, status: Nat, owner: Text) : async Ticket {
-    let ticket = {id=tickerBuffer.size(); name=name; departureDate=departureDate; departureCity=departureCity; destinationCity=destinationCity; status=status; owner=owner};
+  public func createTicket(
+    // name: Text,
+    // departureDate: Text,
+    // departureCity: Text, 
+    // destinationCity: Text, 
+    // status: Text, 
+    // owner: Text
+    ) : async Ticket {
+    let ticket = {
+      id = tickerBuffer.size();
+      name = "Dev";
+      departureDate = "2022-01-01";
+      departureCity = "New York";
+      destinationCity = "London";
+      status = "Pending";
+      price = "50";
+    };
     tickerBuffer.add(ticket);
     return ticket;
   };
