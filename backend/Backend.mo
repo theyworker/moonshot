@@ -1,18 +1,37 @@
-actor class Backend() {
-  stable var counter = 0;
+// motoko name=initialize
+import Buffer "mo:base/Buffer";
 
-  // Get the current count
-  public query func get() : async Nat {
-    counter;
-  };
-
-  // Increment the count by one
-  public func inc() : async () {
-    counter += 1;
-  };
-
-  // Add `n` to the current count
-  public func add(n : Nat) : async () {
-    counter += n;
-  };
+actor class TicketMaster() {
+  type Ticket = {
+  id: Nat;
+  name: Text;
+  departureDate: Text;
+  departureCity: Text;
+  destinationCity: Text;
+  status : Nat;
+  owner: Text
 };
+
+  let tickerBuffer = Buffer.Buffer<Ticket>(100);
+
+  public func createTicket(name: Text, departureDate: Text, departureCity: Text, destinationCity: Text, status: Nat, owner: Text) : async Ticket {
+    let ticket = {id=tickerBuffer.size(); name=name; departureDate=departureDate; departureCity=departureCity; destinationCity=destinationCity; status=status; owner=owner};
+    tickerBuffer.add(ticket);
+    return ticket;
+  };
+
+  public func getTicket(id: Nat) : async Ticket {
+    let ticket = tickerBuffer.get(id);
+    return ticket;
+  };
+
+  public func getNoTicket(): async Nat {
+    return tickerBuffer.size();
+  };
+
+  public func getTicketBuffer() : async [Ticket] {
+    return Buffer.toArray(tickerBuffer);
+  };
+
+};
+
