@@ -1,35 +1,38 @@
 // motoko name=initialize
 import Buffer "mo:base/Buffer";
+import Int "mo:base/Int";
+import Nat "mo:base/Nat";
+import Text "mo:base/Text";
 
 actor class TicketMaster() {
   type Ticket = {
     id : Nat;
     name : Text;
-    departureDate : Text;
     departureCity : Text;
     destinationCity : Text;
-    status : Text;
+    departureDate : Text;
     price : Text;
+    status : Text;
   };
 
   let tickerBuffer = Buffer.Buffer<Ticket>(100);
 
   public func createTicket(
-    // name : Text,
-    // departureDate : Text,
-    // departureCity : Text,
-    // destinationCity : Text,
-    // status : Text,
-    // owner : Text,
+    name : Text,
+    departureCity : Text,
+    destinationCity : Text,
+    departureDate : Text,
+    price : Text,
+    status : Text,
   ) : async Ticket {
     let ticket = {
       id = tickerBuffer.size();
-      name = "Devaka";
-      departureDate = "2024-01-01";
-      departureCity = "New York";
-      destinationCity = "London";
-      status = "Pending";
-      price = "50";
+      name = name;
+      departureCity = departureCity;
+      destinationCity = destinationCity;
+      departureDate = departureDate;
+      price = price;
+      status = status;
     };
     tickerBuffer.add(ticket);
     return ticket;
