@@ -8,7 +8,7 @@ export const FilterWrapper = () => {
     const [to, setTo] = React.useState('');
     const [date, setDate] = React.useState('');
     return (
-        <Box sx={{width: 600, padding: 3}}>
+        <Box sx={{width: 300, padding: 3}}>
 
             <Filter value="From" selected={from} handleSelected={setFrom}/>
             <hr style={{border: '1px solid gray' }}/>
