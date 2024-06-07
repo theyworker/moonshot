@@ -14,7 +14,6 @@ export const Marketplace = () => {
   return (
     <main>
       <Typography sx={{ padding: "30px", fontSize: '1.6rem' }}>Explore</Typography>
-      <p>{tickets ? 'Tickets' :''}</p>
       <Box display="flex">
         <FilterWrapper />
 

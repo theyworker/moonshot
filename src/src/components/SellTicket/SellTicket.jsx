@@ -3,13 +3,58 @@ import { Typography, Button, OutlinedInput, InputLabel } from '@mui/material';
 import { Filter } from '../Marketplace/Filter';
 import { DateFilter } from '../Marketplace/DateFilter';
 import { UploadFile } from './UploadFile';
-import { useQueryCall, useUpdateCall } from '@ic-reactor/react';
+import {
+  useQueryCall,
+  useUpdateCall,
+  useUserPrincipal,
+} from '@ic-reactor/react';
 
 export const SellTicket = () => {
   // const { data: count, call: refetchCount } = useQueryCall({
   //   functionName: 'get',
   // });
 
+  const [formData, setFormData] = React.useState({
+    serialNo: '',
+    from: '',
+    to: '',
+    date: '',
+    price: '',
+  });
+
+  const updateSerialNo = (value) => {
+    setFormData({
+      ...formData,
+      serialNo: value,
+    });
+  };
+
+  const updateFrom = (value) => {
+    setFormData({
+      ...formData,
+      from: value,
+    });
+  };
+  const updateTo = (value) => {
+    setFormData({
+      ...formData,
+      to: value,
+    });
+  };
+  const updateDate = (value) => {
+    setFormData({
+      ...formData,
+      date: value,
+    });
+  };
+  const updatePrice = (value) => {
+    setFormData({
+      ...formData,
+      price: value,
+    });
+  };
+
+  const principal = useUserPrincipal();
   const { call: createTicket, loading } = useUpdateCall({
     functionName: 'createTicket',
     // args: [
@@ -29,6 +74,39 @@ export const SellTicket = () => {
       console.log('Error creating ticket', e);
     },
   });
+
+  const { call: newTicket, loadingnt } = useUpdateCall({
+    functionName: 'newTicket',
+    args: [
+      formData.serialNo,
+      formData.date,
+      formData.from,
+      formData.to,
+      formData.price,
+    ],
+
+    onSuccess: () => {
+      console.log('Ticket created');
+    },
+    onError: (e) => {
+      console.log('Error creating ticket', e);
+    },
+  });
+
+  const submitTicket = () => {
+    if (
+      formData.serialNo &&
+      formData.from &&
+      formData.to &&
+      formData.date &&
+      formData.price
+    ) {
+      newTicket();
+    }
+    else {
+      alert('Please fill all the fields')
+    }
+  };
   return (
     <div>
       <Typography sx={{ padding: '30px', fontSize: '1.6rem' }}>
@@ -62,10 +140,14 @@ export const SellTicket = () => {
             >
               Serial No.
             </InputLabel>
-            <OutlinedInput id="serial-no" placeholder={'ABC123!@#XYZ'} />
-            <Filter value="To" />
-            <Filter value="From" />
-            <DateFilter />
+            <OutlinedInput
+              id="serial-no"
+              placeholder={'ABC123!@#XYZ'}
+              onChange={(event) => updateSerialNo(event.target.value)}
+            />
+            <Filter value="To" handleChange={updateTo} />
+            <Filter value="From" handleChange={updateFrom} />
+            <DateFilter handleChange={updateDate} />
             <InputLabel
               htmlFor="price"
               sx={{
@@ -76,7 +158,11 @@ export const SellTicket = () => {
             >
               Price
             </InputLabel>
-            <OutlinedInput id="price" placeholder={'50.00'} />
+            <OutlinedInput
+              id="price"
+              placeholder={'50.00'}
+              onChange={(event) => updatePrice(event.target.value)}
+            />
           </form>
         </div>
         <div style={{ padding: '20px' }}>
@@ -88,10 +174,12 @@ export const SellTicket = () => {
           type="submit"
           variant="contained"
           color="primary"
-          onClick={() => createTicket()}
+          onClick={() => submitTicket()}
         >
           Submit
         </Button>
+
+        
       </div>
     </div>
   );
