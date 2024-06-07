@@ -1,0 +1,18 @@
+type TicketMaster = 
+ service {
+   createTicket: () -> (Ticket);
+   getNoTicket: () -> (nat);
+   getTicket: (nat) -> (Ticket);
+   getTicketBuffer: () -> (vec Ticket);
+ };
+type Ticket = 
+ record {
+   departureCity: text;
+   departureDate: text;
+   destinationCity: text;
+   id: nat;
+   name: text;
+   price: text;
+   status: text;
+ };
+service : () -> TicketMaster

@@ -17,5 +17,5 @@
     "jsx": "react-jsx",
     "types": ["vite/client", "@testing-library/jest-dom"]
   },
-  "include": ["srcOld"]
+  "include": ["src"]
 }
